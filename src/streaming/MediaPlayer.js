@@ -1138,6 +1138,10 @@ function MediaPlayer() {
         return dashMetrics;
     }
 
+    function getABRController() {
+        return abrController;
+    }
+
     /*
     ---------------------------------------------------------------------------
 
@@ -2256,6 +2260,7 @@ function MediaPlayer() {
         setAutoPlay: setAutoPlay,
         getAutoPlay: getAutoPlay,
         getDashMetrics: getDashMetrics,
+        getABRController: getABRController,
         getQualityFor: getQualityFor,
         setQualityFor: setQualityFor,
         updatePortalSize: updatePortalSize,

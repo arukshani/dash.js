@@ -382,7 +382,7 @@ function WebmSegmentBaseLoader() {
         request = getFragmentRequest(info);
 
         logger.debug('Pacing request:' + info.url);
-        sleep(200);
+        // sleep(200);
 
         // first load the header, but preserve the manifest range so we can
         // load the cues after parsing the header
