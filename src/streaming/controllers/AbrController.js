@@ -184,8 +184,15 @@ function AbrController() {
 
     function onQualityChangeRendered(e) {
         if (e.mediaType === Constants.VIDEO) {
-            playbackIndex = e.oldQuality;
-            droppedFramesHistory.push(playbackIndex, videoModel.getPlaybackQuality());
+            logger.debug("value of e aka playback" + JSON.stringify(e));
+            // playbackIndex = e.oldQuality;
+            // var qual = JSON.stringify(videoModel.getPlaybackQuality());
+            // logger.debug("onQualityChangeRendered push> playbackIndex:" + playbackIndex + " playbackQuality:" + qual);
+            // droppedFramesHistory.push(playbackIndex, videoModel.getPlaybackQuality());
+            if (playbackIndex !== undefined) {
+                droppedFramesHistory.push(playbackIndex, videoModel.getPlaybackQuality());
+            }
+            playbackIndex = e.newQuality;
         }
     }
 
@@ -314,6 +321,8 @@ function AbrController() {
             if (droppedFramesHistory) {
                 const playbackQuality = videoModel.getPlaybackQuality();
                 if (playbackQuality) {
+                    logger.debug("oldQuality:" + oldQuality);
+                    logger.debug("checkPlaybackQuality push> playbackIndex:" + playbackIndex + " playbackQuality:" + JSON.stringify(playbackQuality));
                     droppedFramesHistory.push(playbackIndex, playbackQuality);
                 }
             }
@@ -329,7 +338,7 @@ function AbrController() {
                     newQuality = topQualityIdx;
                 }
 
-                switchHistoryDict[type].push({oldValue: oldQuality, newValue: newQuality});
+                switchHistoryDict[type].push({ oldValue: oldQuality, newValue: newQuality });
 
                 if (newQuality > SwitchRequest.NO_CHANGE && newQuality != oldQuality) {
                     if (abandonmentStateDict[type].state === MetricsConstants.ALLOW_LOAD || newQuality > oldQuality) {

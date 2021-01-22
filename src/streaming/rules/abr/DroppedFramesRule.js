@@ -25,6 +25,7 @@ function DroppedFramesRule() {
         const droppedFramesHistory = rulesContext.getDroppedFramesHistory();
         if (droppedFramesHistory) {
             const dfh = droppedFramesHistory.getFrameHistory();
+            logger.debug('Dropped frame history: ' + JSON.stringify(dfh));
             let droppedFrames = 0;
             let totalFrames = 0;
             let maxIndex = SwitchRequest.NO_CHANGE;
@@ -35,7 +36,8 @@ function DroppedFramesRule() {
 
                     if (totalFrames > GOOD_SAMPLE_SIZE && droppedFrames / totalFrames > DROPPED_PERCENTAGE_FORBID) {
                         maxIndex = i - 1;
-                        logger.debug('index: ' + maxIndex + ' Dropped Frames: ' + droppedFrames + ' Total Frames: ' + totalFrames);
+                        var dropPerc = droppedFrames / totalFrames;
+                        logger.debug('index: ' + maxIndex + ' Dropped Frames: ' + droppedFrames + ' Total Frames: ' + totalFrames + ' dfh.length:' + dfh.length + 'drop percentage:' + dropPerc + 'value of i:' + i);
                         break;
                     }
                 }

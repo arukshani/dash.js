@@ -24,6 +24,7 @@ function SwitchHistoryRule() {
     function getMaxIndex(rulesContext) {
         const switchRequestHistory = rulesContext ? rulesContext.getSwitchHistory() : null;
         const switchRequests = switchRequestHistory ? switchRequestHistory.getSwitchRequests() : [];
+        logger.debug("switchRequests: " + JSON.stringify(switchRequests));
         let drops = 0;
         let noDrops = 0;
         let dropSize = 0;
@@ -36,6 +37,7 @@ function SwitchHistoryRule() {
                 dropSize += switchRequests[i].dropSize;
 
                 if (drops + noDrops >= SAMPLE_SIZE && (drops / noDrops > MAX_SWITCH)) {
+                    logger.debug("switchRequest i : " + i);
                     switchRequest.quality = (i > 0 && switchRequests[i].drops > 0) ? i - 1 : i;
                     switchRequest.reason = {index: switchRequest.quality, drops: drops, noDrops: noDrops, dropSize: dropSize};
                     logger.debug('Switch history rule index: ' + switchRequest.quality + ' samples: ' + (drops + noDrops) + ' drops: ' + drops);
